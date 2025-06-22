@@ -1,0 +1,119 @@
+<div class="bg-white shadow overflow-hidden sm:rounded-lg">
+  <div class="px-4 py-5 sm:px-6 flex justify-between items-center">
+    <h3 class="text-lg leading-6 font-medium text-gray-900">{{ isEditMode ? 'Editar' : 'Nuevo' }} Proyecto</h3>
+  </div>
+  
+  <div *ngIf="isLoading" class="flex justify-center items-center py-8">
+    <svg class="animate-spin h-8 w-8 text-indigo-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+      <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+      <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+    </svg>
+  </div>
+  
+  <div *ngIf="error" class="bg-red-50 border-l-4 border-red-400 p-4 mx-4 my-2">
+    <div class="flex">
+      <div class="flex-shrink-0">
+        <svg class="h-5 w-5 text-red-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+        </svg>
+      </div>
+      <div class="ml-3">
+        <p class="text-sm text-red-700">{{ error }}</p>
+      </div>
+    </div>
+  </div>
+  
+  <div *ngIf="!isLoading" class="border-t border-gray-200 px-4 py-5 sm:p-6">
+    <form [formGroup]="projectForm" (ngSubmit)="onSubmit()">
+      <div class="space-y-6">
+        <!-- Nombre del proyecto -->
+        <div>
+          <label for="name" class="block text-sm font-medium text-gray-700">Nombre del proyecto *</label>
+          <div class="mt-1">
+            <input type="text" id="name" formControlName="name" 
+              class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+              [ngClass]="{'border-red-300': projectForm.get('name')?.invalid && projectForm.get('name')?.touched}">
+          </div>
+          <div *ngIf="projectForm.get('name')?.invalid && projectForm.get('name')?.touched" class="mt-1 text-sm text-red-600">
+            <span *ngIf="projectForm.get('name')?.errors?.['required']">El nombre del proyecto es obligatorio.</span>
+            <span *ngIf="projectForm.get('name')?.errors?.['maxlength']">El nombre no puede exceder los 100 caracteres.</span>
+          </div>
+        </div>
+        
+        <!-- Descripción -->
+        <div>
+          <label for="description" class="block text-sm font-medium text-gray-700">Descripción</label>
+          <div class="mt-1">
+            <textarea id="description" formControlName="description" rows="3"
+              class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+              [ngClass]="{'border-red-300': projectForm.get('description')?.invalid && projectForm.get('description')?.touched}"></textarea>
+          </div>
+          <div *ngIf="projectForm.get('description')?.invalid && projectForm.get('description')?.touched" class="mt-1 text-sm text-red-600">
+            <span *ngIf="projectForm.get('description')?.errors?.['maxlength']">La descripción no puede exceder los 500 caracteres.</span>
+          </div>
+        </div>
+        
+        <!-- Ubicación -->
+        <div>
+          <label for="location" class="block text-sm font-medium text-gray-700">Ubicación *</label>
+          <div class="mt-1">
+            <input type="text" id="location" formControlName="location" 
+              class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+              [ngClass]="{'border-red-300': projectForm.get('location')?.invalid && projectForm.get('location')?.touched}">
+          </div>
+          <div *ngIf="projectForm.get('location')?.invalid && projectForm.get('location')?.touched" class="mt-1 text-sm text-red-600">
+            <span *ngIf="projectForm.get('location')?.errors?.['required']">La ubicación es obligatoria.</span>
+          </div>
+        </div>
+        
+        <!-- Fechas -->
+        <div class="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-2">
+          <div>
+            <label for="startDate" class="block text-sm font-medium text-gray-700">Fecha de inicio</label>
+            <div class="mt-1">
+              <input type="date" id="startDate" formControlName="startDate" 
+                class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md">
+            </div>
+          </div>
+          
+          <div>
+            <label for="endDate" class="block text-sm font-medium text-gray-700">Fecha de finalización</label>
+            <div class="mt-1">
+              <input type="date" id="endDate" formControlName="endDate" 
+                class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md">
+            </div>
+          </div>
+        </div>
+        
+        <!-- Estado -->
+        <div>
+          <label for="status" class="block text-sm font-medium text-gray-700">Estado *</label>
+          <div class="mt-1">
+            <select id="status" formControlName="status"
+              class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md">
+              <option value="pending">Planificación</option>
+              <option value="active">En construcción</option>
+              <option value="completed">Completado</option>
+              <option value="cancelled">Cancelado</option>
+            </select>
+          </div>
+        </div>
+        
+        <!-- Botones -->
+        <div class="flex justify-end space-x-3">
+          <button type="button" (click)="cancel()" class="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+            Cancelar
+          </button>
+          <button type="submit" [disabled]="projectForm.invalid || isSubmitting" 
+            class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50">
+            <svg *ngIf="isSubmitting" class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+            {{ isEditMode ? 'Actualizar' : 'Crear' }} Proyecto
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

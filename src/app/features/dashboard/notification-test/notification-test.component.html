@@ -1,0 +1,44 @@
+<div class="bg-white rounded-lg shadow-md p-6 mb-6">
+  <h2 class="text-xl font-semibold text-gray-800 mb-4">Prueba de Notificaciones</h2>
+  
+  <div class="mb-6">
+    <div class="space-y-4">
+      <h3 class="text-lg font-medium text-gray-700">Notificaciones</h3>
+      <p class="text-sm text-gray-600">Prueba los diferentes tipos de notificaciones del sistema</p>
+      
+      <div class="flex flex-wrap gap-2">
+        <button 
+          (click)="showSuccessNotification()" 
+          class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition-colors">
+          Éxito
+        </button>
+        
+        <button 
+          (click)="showErrorNotification()" 
+          class="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition-colors">
+          Error
+        </button>
+        
+        <button 
+          (click)="showInfoNotification()" 
+          class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors">
+          Info
+        </button>
+        
+        <button 
+          (click)="showWarningNotification()" 
+          class="px-4 py-2 bg-yellow-600 text-white rounded hover:bg-yellow-700 transition-colors">
+          Advertencia
+        </button>
+      </div>
+    </div>
+  </div>
+  
+  <div class="mt-6 p-4 bg-gray-50 rounded border border-gray-200">
+    <h3 class="text-md font-medium text-gray-700 mb-2">Instrucciones</h3>
+    <ul class="list-disc pl-5 text-sm text-gray-600 space-y-1">
+      <li>Las notificaciones aparecerán en la parte superior de la pantalla</li>
+      <li>Puedes usar estos botones para probar la integración del sistema de notificaciones</li>
+    </ul>
+  </div>
+</div>

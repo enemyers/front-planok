@@ -1,0 +1,11 @@
+<div class="notifications-container">
+  <div *ngFor="let notification of notifications">
+    <app-alert
+      [type]="notification.type"
+      [message]="notification.message"
+      [autoClose]="notification.autoClose"
+      [autoCloseDelay]="notification.autoCloseDelay || 5000"
+      (click)="removeNotification(notification.id)"
+    ></app-alert>
+  </div>
+</div>
