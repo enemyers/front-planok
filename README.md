@@ -1,7 +1,5 @@
 # PlanOK - Frontend Angular con Tailwind CSS y JWT
 
-Este proyecto es una aplicación frontend desarrollada con Angular 20 y Tailwind CSS que se conecta a un backend existente mediante autenticación JWT. La aplicación sigue los principios SOLID y prácticas de Clean Code para garantizar un código mantenible y escalable.
-
 ## Características
 
 - **Angular 20**: Utiliza la última versión estable de Angular con componentes standalone
