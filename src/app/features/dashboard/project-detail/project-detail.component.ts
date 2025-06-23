@@ -99,6 +99,11 @@ export class ProjectDetailComponent implements OnInit {
 
   formatDate(date: Date | string | undefined): string {
     if (!date) return 'No definida';
-    return new Date(date).toLocaleDateString();
+    const fechaObj = new Date(date);
+    return fechaObj.toLocaleDateString('es-ES', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric'
+    });
   }
 }
