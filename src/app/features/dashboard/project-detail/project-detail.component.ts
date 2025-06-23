@@ -62,7 +62,6 @@ export class ProjectDetailComponent implements OnInit {
       return;
     }
 
-    // Mostrar confirmación antes de eliminar
     if (confirm('¿Está seguro de que desea eliminar este proyecto?')) {
       this.isDeleting = true;
       this.projectService.deleteProject(this.project.id)

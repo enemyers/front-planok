@@ -16,14 +16,11 @@ export const appConfig: ApplicationConfig = {
     provideBrowserGlobalErrorListeners(),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
-    // Proporcionar JwtHelperService directamente
     { provide: JwtHelperService, useFactory: () => new JwtHelperService() },
     provideHttpClient(
       withInterceptors([
         (req, next) => {
-          // Implementación simple del interceptor JWT
           const token = tokenGetter();
-          // Skip token for auth endpoints
           if (token && !req.url.includes('/v2/token')) {
             req = req.clone({
               setHeaders: {

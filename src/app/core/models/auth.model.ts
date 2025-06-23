@@ -6,8 +6,6 @@ export interface LoginRequest {
 export interface AuthResponse {
   refresh: string;
   access: string;
-  // La API JWT no devuelve información del usuario directamente
-  // Tendremos que decodificar el token para obtener esa información
 }
 
 export interface TokenPayload {

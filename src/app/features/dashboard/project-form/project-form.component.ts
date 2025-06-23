@@ -107,20 +107,16 @@ export class ProjectFormComponent implements OnInit {
     const projectData: any = {
       nombre: this.projectForm.value.name,
       descripcion: this.projectForm.value.description || '',
-      ubicacion: this.projectForm.value.location, // Incluimos el campo de ubicación
-      estado: apiStatus // Usamos el estado mapeado
+      ubicacion: this.projectForm.value.location,
+      estado: apiStatus
     };
     
-    // Si estamos creando un nuevo proyecto
     if (!this.isEditMode) {
-      // Generar un código simple
       projectData.codigo = 'P-' + Math.floor(Math.random() * 10000).toString().padStart(4, '0');
     }
     
-    // Añadir fechas solo si se proporcionan (podrían ser opcionales)
     if (this.projectForm.value.startDate) {
       try {
-        // Convertir al formato ISO para asegurar que sea compatible
         const startDate = new Date(this.projectForm.value.startDate);
         projectData.fecha_inicio = startDate.toISOString().split('T')[0];
       } catch (e) {

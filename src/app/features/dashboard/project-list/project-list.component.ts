@@ -94,7 +94,6 @@ export class ProjectListComponent implements OnInit {
         })
       )
       .subscribe(response => {
-        // Usamos la estructura correcta de la respuesta
         this.projects = response.projects;
         this.totalProjects = response.total;
       });

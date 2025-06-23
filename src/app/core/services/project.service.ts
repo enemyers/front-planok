@@ -69,7 +69,6 @@ export class ProjectService {
    * @returns Observable con el proyecto
    */
   getProjectById(id: string): Observable<Project> {
-    // Aplicamos la misma lógica que en updateProject para construir la URL correctamente
     const cleanBasePath = this.BASE_PATH.replace(/^\/|\/$/, '');
     const cleanId = id.replace(/\//g, '');
     const path = `${cleanBasePath}/${cleanId}/`;
@@ -99,11 +98,8 @@ export class ProjectService {
    */
   createProject(project: Partial<Project>): Observable<Project> {
     console.log('ProjectService.createProject - Payload:', project);
-    // Para Django, aseguramos que la URL TERMINE con una barra diagonal
-    // Ya que Django tiene APPEND_SLASH activado y no puede redireccionar peticiones POST
     const cleanBasePath = this.BASE_PATH.replace(/^\/|\/$/, '');
     const path = `${cleanBasePath}/`;
-    
     console.log('URL path for create:', path);
     
     return this.apiService.post<Project>(path, project)
@@ -141,16 +137,8 @@ export class ProjectService {
   updateProject(id: string, project: Partial<Project>): Observable<Project> {
     console.log('ProjectService.updateProject - ID:', id, 'Payload:', project);
     
-    // IMPORTANTE: El API_URL se modifica en ApiService.put y siempre agrega una barra
-    // Necesitamos asegurarnos de que la ruta sea exactamente: v1/proyectos/ID/
-    
-    // Limpiamos cualquier barra diagonal al principio o final del BASE_PATH
     const cleanBasePath = this.BASE_PATH.replace(/^\/|\/$/, '');
-    
-    // Limpiamos el ID de cualquier barra diagonal
     const cleanId = id.replace(/\//g, '');
-    
-    // Creamos la ruta final que ApiService usará
     const path = `${cleanBasePath}/${cleanId}/`;
     
     console.log('URL path for update:', path);
@@ -192,15 +180,11 @@ export class ProjectService {
    * @returns Observable vacío
    */
   deleteProject(id: string): Observable<void> {
-    // Primero obtenemos el proyecto para tener su nombre antes de eliminarlo
     return new Observable<void>(observer => {
       this.getProjectById(id).subscribe({
         next: (project) => {
-          // Guardamos el nombre del proyecto para usarlo en la actividad
           const projectName = project.name;
           
-          // Ahora eliminamos el proyecto
-          // Aplicamos la misma lógica que en updateProject para construir la URL correctamente
           const cleanBasePath = this.BASE_PATH.replace(/^\/|\/$/, '');
           const cleanId = id.replace(/\//g, '');
           const path = `${cleanBasePath}/${cleanId}/`;
@@ -209,9 +193,6 @@ export class ProjectService {
           this.apiService.delete<void>(path).subscribe({
             next: () => {
               this.notificationService.success('Proyecto eliminado con éxito');
-              
-
-              
               observer.next();
               observer.complete();
             },

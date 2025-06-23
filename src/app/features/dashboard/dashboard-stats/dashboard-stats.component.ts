@@ -51,14 +51,11 @@ export class DashboardStatsComponent implements OnInit {
     this.isLoading = true;
     this.error = null;
 
-    // Obtener todos los proyectos para calcular estadísticas
-    // En un entorno real, esto debería hacerse en el backend
     this.projectService.getProjects(1, 100)
       .pipe(
         map(response => {
           const projects = response.projects || [];
           
-          // Calcular estadísticas
           this.stats = {
             totalProjects: projects.length,
             activeProjects: projects.filter(p => p.status === 'active').length,

@@ -16,7 +16,6 @@ export class LoginComponent implements OnInit {
   isSubmitting = false;
   errorMessage = '';
   
-  // Usar inyección moderna
   private formBuilder = inject(FormBuilder);
   private authService = inject(AuthService);
   private router = inject(Router);
@@ -44,8 +43,6 @@ export class LoginComponent implements OnInit {
     this.isSubmitting = true;
     this.errorMessage = '';
     
-    // Los nombres de los campos en el formulario coinciden con lo que espera el backend
-    // No es necesario adaptar los datos
     const loginData = {
       email: this.loginForm.value.email,
       password: this.loginForm.value.password
